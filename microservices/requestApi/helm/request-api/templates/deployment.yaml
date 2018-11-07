@@ -58,8 +58,22 @@ spec:
                 secretKeyRef:
                   name: {{ template "ocwaRequestApi.fullname" . }}-secrets
                   key: jwtSecret
+            - name: CREATE_ROLE
+              value: {{ .Values.createRole }}
+            - name: OC_GROUP
+              value: {{ .Values.ocGroup }}
+            - name: ALLOW_DENY
+              value: "{{ .Values.allowDeny }}"
             - name: USER_ID_FIELD
               value: {{ .Values.user.idField }}
+            - name: EMAIL_FIELD
+              value: {{ .Values.user.emailField }}
+            - name: GIVENNAME_FIELD
+              value: {{ .Values.user.givenNameField }}
+            - name: SURNAME_FIELD
+              value: {{ .Values.user.surNameField }}
+            - name: GROUP_FIELD
+              value: {{ .Values.user.groupField }}
           ports:
             - name: http
               containerPort: {{ .Values.apiPort }}

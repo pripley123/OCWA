@@ -12,14 +12,16 @@ image:
 service:
   type: ClusterIP
   port: 80
-  websocketPort: 3001
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations:
+    kubernetes.io/ingress.class: nginx
   path: /
   hosts:
-    - chart-example.local
+    - name: chart-example.local
+      service: ocwa-ocwa-frontend
+      port: 80
   tls: []
 
 ##Configuration for OCWA Policy Api
@@ -31,6 +33,8 @@ host: "serverHostedOnHere"
 cookieSecret: "COOKIE_SECRET_HERE"
 forumApiHost: "ocwa-forum-api.ocwa"
 forumSocket: "ocwa-forum-api.ocwa:3001"
+requestApiHost: "ocwa-requests-api.ocwa"
+filesApiHost: "ocwa-storage-api-mongo.ocwa"
 auth:
   authorizationEndpoint: "openid.auth.endpoint"
   callbackURL: "chart-example.local/auth"
@@ -43,6 +47,8 @@ auth:
 user:
   idField: Email
 
+global:
+  jwtSecret: "ssh this is a secret"
 
 resources: {}
   # If you want to specify resources, uncomment the following

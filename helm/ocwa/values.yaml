@@ -1,4 +1,6 @@
 # Default values for ocwa.
+global:
+  jwtSecret: "ssh this is a secret"
 
 #Frontend configuration
 ocwa-frontend:
@@ -12,14 +14,16 @@ ocwa-frontend:
   service:
     type: ClusterIP
     port: 80
-    websocketPort: 3001
 
   ingress:
     enabled: false
-    annotations: {}
+    annotations:
+      kubernetes.io/ingress.class: nginx
     path: /
     hosts:
-      - chart-example.local
+      - name: chart-example.local
+        service: ocwa-ocwa-frontend
+        port: 80
     tls: []
 
   port: 8000
@@ -30,6 +34,8 @@ ocwa-frontend:
   cookieSecret: "COOKIE_SECRET_HERE"
   forumApiHost: "ocwa-forum-api.ocwa"
   forumSocket: "ocwa-forum-api.ocwa:3001"
+  requestApiHost: "ocwa-request-api.ocwa"
+  filesApiHost: "ocwa-storage-api.ocwa"
   auth:
     authorizationEndpoint: "openid.auth.endpoint"
     callbackURL: "chart-example.local/auth"
@@ -64,14 +70,21 @@ forum-api:
   service:
     type: ClusterIP
     port: 80
+
+  wsService:
+    type: ClusterIP
     websocketPort: 3001
 
   ingress:
     enabled: false
-    annotations: {}
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.org/websocket-services: ocwa-forum-api-ws
     path: /
     hosts:
-      - chart-example.local
+      - name: chart-example.local
+        service: ocwa-forum-api-ws
+        port: 3001
     tls: []
 
   apiPort: 3000
@@ -83,9 +96,14 @@ forum-api:
     password: password
     dbName: forumApi
 
-  jwtSecret: "ssh this is a secret"
+  defaultAccessIsGroup: true
+  requiredRoleToCreateTopic: "exporter"
   user:
     idField: Email
+    emailField: Email
+    givenNameField: GivenName
+    surNameField: Surname
+    groupField: Groups
 
   createDatabase: true
   storageClassName: default
@@ -143,14 +161,13 @@ policy-api:
     password: password
     dbName: forumApi
 
-  apiSecret: "ssh this is a secret"
-  jwtSecret: "jwtSecret"
+  apiSecret: "ssh this is an api secret"
   jwtAudience: "http://localhost"
   jwt_access_group": "admin"
   jwt_group: "Groups"
   user:
     idField: Email
-
+ 
   createDatabase: false
 
 
@@ -192,14 +209,21 @@ request-api:
     password: password
     dbName: forumApi
 
-  jwtSecret: "ssh this is a secret"
+  createRole: "exporter"
+  ocGroup: "oc"
+  allowDeny: false
+
   user:
     idField: Email
+    emailField: Email
+    givenNameField: GivenName
+    surNameField: Surname
+    groupField: Groups
 
-  forumApi: ocwa-forum-api.ocwa
+  forumApi: http://ocwa-forum-api.ocwa
   forumApiSecret: none
 
-  validationApi: ocwa-validation-api.ocwa
+  validationApi: http://ocwa-validation-api.ocwa
   validationApiSecret: validateApiSecret
 
   createDatabase: false
@@ -218,21 +242,26 @@ storage-api:
   replicaCount: 1
 
   access_key: key
-  access_secret: secret
+  access_secret: s3secretkey
 
   image:
     pullPolicy: Always
 
   tus:
-    image: tusproject/tusd
+    image: h3brandon/tusd_py3
     tag: latest
     bucket: bucket
     region: us-east-1 #likely irrelevant
+    jwtHook: true
+
+  jwtAud: "foo"
 
   minio:
     image: minio/minio
     tag: latest
-    gatewayType: azure
+    server: true
+    serverPath: "/data"
+    proto: http
 
   service:
     type: ClusterIP
@@ -241,10 +270,13 @@ storage-api:
 
   ingress:
     enabled: false
-    annotations: {}
+    annotations:
+      kubernetes.io/ingress.class: nginx
     path: /
     hosts:
-      - chart-example.local
+      - name: chart-example.local
+        service: ocwa-storage-api
+        port: 80
     tls: []
 
 
@@ -288,14 +320,13 @@ validate-api:
   storage:
     host: ocwa-storage-api.ocwa:9000
     bucket: data
-    key: myAccessKey
-    secret: mySecretKey
-
+    key: key
+    secret: s3secretkey
 
   policyApi: ocwa-policy-api.ocwa
 
 
-  apiSecret: "ssh this is a secret"
+  apiSecret: "ssh this is a api secret"
   user:
     idField: Email
 
