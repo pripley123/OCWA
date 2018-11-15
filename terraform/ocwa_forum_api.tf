@@ -11,7 +11,7 @@ resource "docker_image" "ocwa_forum_api" {
 resource "docker_container" "ocwa_forum_api" {
   image = "${docker_image.ocwa_forum_api.latest}"
   name = "ocwa_forum_api_tf"
-  networks_advanced = { name = "vlanX" }
+  networks_advanced = { name = "${docker_network.private_network.name}" }
   env = [
       "JWT_SECRET=${random_string.jwtSecret.result}",
       "LOG_LEVEL=debug",

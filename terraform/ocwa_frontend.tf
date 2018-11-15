@@ -11,7 +11,7 @@ resource "docker_image" "ocwa_frontend" {
 resource "docker_container" "ocwa_frontend" {
   image = "${docker_image.ocwa_frontend.latest}"
   name = "ocwa_frontend_tf"
-  networks_advanced = { name = "vlanX" }
+  networks_advanced = { name = "${docker_network.private_network.name}" }
   ports = [ { internal: 8000, external: 8000 } ]
   env = [
       "COOKIE_SECRET=${random_string.cookie.result}",
