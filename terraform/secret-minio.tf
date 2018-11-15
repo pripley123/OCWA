@@ -1,6 +1,6 @@
 resource "random_string" "secretKey" {
   length = 30
-  special = true
+  special = false
   override_special = "/@\" "
 }
 

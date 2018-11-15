@@ -1,5 +1,5 @@
 resource "random_string" "jwtSecret" {
   length = 30
-  special = true
+  special = false
   override_special = "/@\" "
 }
