@@ -24,7 +24,7 @@ resource "docker_container" "ocwa_mongodb" {
 
 resource "null_resource" "mongodb_first_time_install" {
   provisioner "local-exec" {
-    command = "docker exec -ti -v $PWD:/work ocwa_mongodb mongo /work/scripts/mongodb.sql"
+    command = "docker run --net=ocwa_vnet -v $PWD:/work mongo:4.1.3 mongo mongodb://ocwa_mongodb /work/scripts/mongodb.sql"
   }
 
 }
