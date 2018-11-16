@@ -5,6 +5,16 @@ mongodb = {
     password = "passwordX"
 }
 
+postgres = {
+    username = "kcuser"
+    password = "kcuserpassword"
+}
+
+keycloak = {
+    username = "userX"
+    password = "passwordX"
+}
+
 ocwaHost = "https://ocwadev.popdata.bc.ca"
 
 authHost = "https://authdev.popdata.bc.ca"
