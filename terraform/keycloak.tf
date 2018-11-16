@@ -22,8 +22,6 @@ resource "docker_container" "ocwa_keycloak" {
    "KEYCLOAK_USER=${var.keycloak["username"]}",
    "KEYCLOAK_PASSWORD=${var.keycloak["password"]}"
   ]
-
-   depends_on = ["null_resource.postgres_first_time_install"]
 }
 
 resource "null_resource" "keycloak_first_time_install" {
