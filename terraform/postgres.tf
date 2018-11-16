@@ -23,10 +23,10 @@ resource "docker_container" "ocwa_postgres" {
 
 resource "null_resource" "postgres_first_time_install" {
   provisioner "local-exec" {
-    environment = [
-      "POSTGRES_USER=padmin",
-      "POSTGRES_PASSWORD=${random_string.postgresSuperPassword.result}"
-    ],
+    environment = {
+      POSTGRES_USER: "padmin",
+      POSTGRES_PASSWORD: "${random_string.postgresSuperPassword.result}"
+    },
     command = "docker run --net=ocwa_vnet -v $PWD:/work postgres:9.6.9 psql postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@ocwa_postgres -f /work/scripts/psql.sql"
   }
 }
