@@ -23,7 +23,7 @@ resource "docker_container" "ocwa_keycloak" {
    "KEYCLOAK_PASSWORD=${var.keycloak["password"]}"
   ]
   healthcheck = {
-    test = "echo ok"
+    test = ["echo", "ok"]
     start_period = "20s"
     interval = "5s"
     retries = 10
