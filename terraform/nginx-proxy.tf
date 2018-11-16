@@ -35,9 +35,7 @@ data "template_file" "proxy_config" {
   template = "${file("${path.module}/scripts/nginx-proxy.tpl")}"
 }
 
-resource "null_resource" "proxy" {
-  provisioner "file" {
-    content      = "${data.template_file.proxy_config.rendered}"
-    destination = "${var.hostRootPath}/nginx/proxy.conf"
-  }
+resource "local_file" "proxy" {
+    content = "${data.template_file.proxy_config.rendered}"
+    filename = "${var.hostRootPath}/nginx/proxy.conf"
 }
