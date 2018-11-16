@@ -37,5 +37,5 @@ data "template_file" "proxy_config" {
 
 resource "local_file" "proxy" {
     content = "${data.template_file.proxy_config.rendered}"
-    filename = "${var.hostRootPath}/config/proxy.conf"
+    filename = "${var.hostRootPath}/config/nginx/proxy.conf"
 }
