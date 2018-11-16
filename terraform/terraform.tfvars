@@ -1,4 +1,4 @@
-hostRootPath = /var/ocwa
+hostRootPath = "/var/ocwa"
 
 mongodb = {
     username = "userX"
