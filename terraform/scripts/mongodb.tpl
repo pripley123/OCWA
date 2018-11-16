@@ -6,3 +6,5 @@ db.createUser(
     }
 );
 
+db.topics.insert({"name":"topic1", "contributors" : [ ], "author_groups" : [ "/exporter" ]});
+db.permissions.insert({"priority":100,"allow":true, "group_ids":["*"], "topic_id":"*"});

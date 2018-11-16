@@ -11,5 +11,6 @@ CID=$(kcadm.sh create clients -r ocwa -s clientId=outputchecker -s "redirectUris
 
 kcadm.sh get clients/$CID -r ocwa
 
-kcadm.sh create users -r ocwa -s username=testuser -s enabled=true
+kcadm.sh create users -r ocwa -s username=testuser -s enabled=true -s email=testuser@nowhere.com -s firstName=TestF -s lastName=TestL
+
 kcadm.sh set-password -r ocwa --username testuser --new-password $TESTUSER_PASSWORD

@@ -10,10 +10,6 @@ resource "docker_image" "mongodb" {
 resource "docker_container" "ocwa_mongodb" {
   image = "${docker_image.mongodb.latest}"
   name = "ocwa_mongodb"
-  volumes = { 
-    host_path = "${var.hostRootPath}/logs/mongodb"
-    container_path = "/usr/local/var/log/mongodb"
-  }
   volumes = {
     host_path = "${var.hostRootPath}/data/mongodb"
     container_path = "/data/db"

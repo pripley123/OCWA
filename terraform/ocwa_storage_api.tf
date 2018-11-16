@@ -48,3 +48,11 @@ resource "docker_container" "tusd" {
       "AWS_REGION=not_applicable"
   ]
 }
+
+provider "aws" {
+  region = "not_applicable"
+}
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = "bucket"
+}
