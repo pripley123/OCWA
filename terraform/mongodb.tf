@@ -21,12 +21,19 @@ resource "docker_container" "ocwa_mongodb" {
   networks_advanced = { name = "${docker_network.private_network.name}" }
 }
 
+data "template_file" "mongodb_script" {
+  template = "${file("${path.module}/scripts/mongodb.tpl")}"
+  vars = {
+     MONGO_USERNAME = "${var.mongodb["username"]}",
+     MONGO_PASSWORD = "${random_string.mongoSuperPassword.result}"
+  }
+}
+
 resource "null_resource" "mongodb_first_time_install" {
   provisioner "local-exec" {
     environment = {
-        MONGO_USERNAME = "${var.mongodb["username"]}",
-        MONGO_PASSWORD = "${random_string.mongoSuperPassword.result}"
+        SCRIPT = "${data.template_file.proxy_config.rendered}"
     }
-    command = "docker run --net=ocwa_vnet -e MONGO_USERNAME -e MONGO_PASSWORD -v $PWD:/work mongo:4.1.3 mongo mongodb://ocwa_mongodb /work/scripts/mongodb.sql"
+    command = "docker run --net=ocwa_vnet mongo:4.1.3 mongo mongodb://ocwa_mongodb $SCRIPT"
   }
 }
