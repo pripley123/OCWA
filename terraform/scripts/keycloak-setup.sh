@@ -2,7 +2,7 @@
   export KEYCLOAK_HOME=`pwd`/keycloak
   export PATH=$PATH:$KEYCLOAK_HOME/bin
 
-  keycloak/bin/kcadm.sh config credentials --server http://ocwa_keycloak:8080/auth --realm master --user admin --client admin-cli --password admin#1
+  keycloak/bin/kcadm.sh config credentials --server http://ocwa_keycloak:8080/auth --realm master --user $KEYCLOAK_USER --client admin-cli --password $KEYCLOAK_PASSWORD
 
   keycloak/bin/kcadm.sh create realms -s realm=ocwa -s enabled=true -o
 
