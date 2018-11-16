@@ -25,3 +25,10 @@ resource "docker_container" "ocwa_keycloak" {
 
    depends_on = ["null_resource.postgres_first_time_install"]
 }
+
+resource "null_resource" "keycloak_first_time_install" {
+  provisioner "local-exec" {
+    command = "docker run --net=ocwa_vnet -v $PWD:/work --entrypoint /work/scripts/keycloak-setup.sh jboss/keycloak:4.1.0.Final"
+  }
+
+}
