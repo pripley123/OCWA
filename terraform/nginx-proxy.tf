@@ -33,10 +33,6 @@ resource "docker_container" "ocwa_nginx" {
 
 data "template_file" "proxy_config" {
   template = "${file("scripts/nginx-proxy.tpl")}"
-
-  vars {
-    test = "OK"
-  }
 }
 
 resource "null_resource" "proxy_config" {
@@ -44,5 +40,4 @@ resource "null_resource" "proxy_config" {
     content      = "${data.template_file.proxy_config.rendered}"
     destination = "${var.hostRootPath}/nginx/proxy.conf"
   }
-  depends_on = ["template_file.proxy_config"]
 }
