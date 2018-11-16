@@ -28,7 +28,7 @@ resource "docker_container" "ocwa_nginx" {
     container_path = "/etc/nginx/conf.d/"
   }
 
-  depends_on = ["null_resource.proxy"]
+  depends_on = ["local_file.proxy"]
 }
 
 data "template_file" "proxy_config" {
