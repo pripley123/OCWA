@@ -14,14 +14,19 @@ resource "docker_container" "ocwa_postgres" {
     host_path = "${var.hostRootPath}/postgres-data/data"
     container_path = "/var/lib/postgresql/data"
   }
+  env = [
+      "POSTGRES_USER=padmin",
+      "POSTGRES_PASSWORD=${random_string.postgresSuperPassword.result}"
+  ]
   networks_advanced = { name = "${docker_network.private_network.name}" }
 }
 
-/*
 resource "null_resource" "postgres_first_time_install" {
   provisioner "local-exec" {
-    command = "docker run --net=ocwa_vnet -v $PWD:/work postgres:9.6.9 psql /work/scripts/psql.sql"
+    environment = [
+      "POSTGRES_USER=padmin",
+      "POSTGRES_PASSWORD=${random_string.postgresSuperPassword.result}"
+    ],
+    command = "docker run --net=ocwa_vnet -v $PWD:/work postgres:9.6.9 psql postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@ocwa_postgres -f /work/scripts/psql.sql"
   }
-
 }
-*/
