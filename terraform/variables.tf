@@ -25,3 +25,11 @@ variable "authClientSecret" {
 variable "hostRootPath" {
   type = "string"
 }
+
+variable "sslCertificate" {
+  type = "string"
+}
+
+variable "sslCertificateKey" {
+  type = "string"
+}
