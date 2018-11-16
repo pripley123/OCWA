@@ -44,7 +44,7 @@ server {
     proxy_set_header         Upgrade $http_upgrade;
     proxy_set_header         Connection $connection_upgrade;
 
-    proxy_pass http://oc_minio:9000;
+    proxy_pass http://ocwa_minio:9000;
   }
 
   location /api/v1/files {
@@ -56,7 +56,7 @@ server {
     proxy_set_header         Upgrade $http_upgrade;
     proxy_set_header         Connection $connection_upgrade;
 
-    proxy_pass http://oc_tusd:1080;
+    proxy_pass http://ocwa_tusd:1080;
   }
 
   # Proxy everything over to the service
