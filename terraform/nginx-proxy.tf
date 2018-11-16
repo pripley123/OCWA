@@ -44,4 +44,5 @@ resource "null_resource" "proxy_config" {
     content      = "${data.template_file.proxy_config.rendered}"
     destination = "${var.hostRootPath}/nginx/proxy.conf"
   }
+  depends_on = ["template_file.proxy_config"]
 }
