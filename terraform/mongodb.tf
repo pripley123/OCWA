@@ -31,13 +31,13 @@ data "template_file" "mongodb_script" {
 
 resource "local_file" "mongodb_script" {
     content = "${data.template_file.mongodb_script.rendered}"
-    filename = "${var.hostRootPath}/config/mongodb_script.js"
+    filename = "${var.hostRootPath}/data/mongodb_script.js"
 }
 
 resource "null_resource" "mongodb_first_time_install" {
   provisioner "local-exec" {
     environment = {
-        SCRIPT_PATH = "${var.hostRootPath}/config"
+        SCRIPT_PATH = "${var.hostRootPath}/data"
     }
     command = "docker run --net=ocwa_vnet -v $SCRIPT_PATH:/work mongo:4.1.3 mongo mongodb://ocwa_mongodb /work/mongodb_script.js"
   }
