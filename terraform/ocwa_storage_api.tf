@@ -50,7 +50,7 @@ resource "docker_container" "tusd" {
 }
 
 provider "aws" {
-  region = "not_applicable"
+  region = "eu-west-1"
 }
 
 resource "aws_s3_bucket" "bucket" {
