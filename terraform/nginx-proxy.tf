@@ -24,7 +24,7 @@ resource "docker_container" "ocwa_nginx" {
     container_path = "/ssl"
   }
   volumes = { 
-    host_path = "${var.hostRootPath}/nginx"
+    host_path = "${var.hostRootPath}/config/nginx"
     container_path = "/etc/nginx/conf.d/"
   }
 
@@ -37,5 +37,5 @@ data "template_file" "proxy_config" {
 
 resource "local_file" "proxy" {
     content = "${data.template_file.proxy_config.rendered}"
-    filename = "${var.hostRootPath}/nginx/proxy.conf"
+    filename = "${var.hostRootPath}/config/nginx/proxy.conf"
 }

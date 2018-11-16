@@ -14,11 +14,11 @@ resource "docker_container" "minio" {
   command = [ "server", "/data" ]
   networks_advanced = { name = "${docker_network.private_network.name}" }
   volumes = {
-    host_path = "${var.hostRootPath}/minio/data"
+    host_path = "${var.hostRootPath}/data/minio"
     container_path = "/data"
   }
   volumes = {
-    host_path = "${var.hostRootPath}/minio/config"
+    host_path = "${var.hostRootPath}/config/minio"
     container_path = "/root/.minio"
   }
   env = [
@@ -26,7 +26,6 @@ resource "docker_container" "minio" {
       "MINIO_SECRET_KEY=${random_string.secretKey.result}"
   ]
 }
-
 
 
 data "docker_registry_image" "tusd" {
@@ -43,17 +42,9 @@ resource "docker_container" "tusd" {
   name = "ocwa_tusd"
   command = [ "-s3-bucket", "bucket", "-s3-endpoint", "http://ocwa_minio:9000" ]
   networks_advanced = { name = "${docker_network.private_network.name}" }
-  volumes = {
-    host_path = "${var.hostRootPath}/minio/data"
-    container_path = "/data"
-  }
-  volumes = {
-    host_path = "${var.hostRootPath}/minio/config"
-    container_path = "/root/.minio"
-  }
   env = [
       "AWS_ACCESS_KEY=${random_id.accessKey.hex}",
       "AWS_SECRET_ACCESS_KEY=${random_string.secretKey.result}",
-      "AWS_REGION=canada"
+      "AWS_REGION=not_applicable"
   ]
 }

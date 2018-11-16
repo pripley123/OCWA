@@ -19,7 +19,7 @@ resource "docker_container" "ocwa_validate_api" {
       "DB_HOST=ocwa_mongodb",
       "DB_NAME=oc_db",
       "DB_USERNAME=${var.mongodb["username"]}",
-      "DB_PASSWORD=${var.mongodb["password"]}",
+      "DB_PASSWORD=${random_string.mongoSuperPassword.result}",
       "USER_ID_FIELD=email",
       "STORAGE_HOST=ocwa_minio",
       "STORAGE_BUCKET=bucket",

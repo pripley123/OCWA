@@ -19,7 +19,7 @@ resource "docker_container" "ocwa_policy_api" {
       "DB_HOST=ocwa_mongodb",
       "DB_NAME=oc_db",
       "DB_USERNAME=${var.mongodb["username"]}",
-      "DB_PASSWORD=${var.mongodb["password"]}",
+      "DB_PASSWORD=${random_string.mongoSuperPassword.result}",
       "JWT_AUD=aud",
       "JWT_ACCESS_GROUP=admin",
       "JWT_GROUPS=groups"

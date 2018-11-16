@@ -20,7 +20,7 @@ resource "docker_container" "ocwa_forum_api" {
       "DB_HOST=ocwa_mongodb",
       "DB_NAME=oc_db",
       "DB_USERNAME=${var.mongodb["username"]}",
-      "DB_PASSWORD=${var.mongodb["password"]}",
+      "DB_PASSWORD=${random_string.mongoSuperPassword.result}",
       "USER_ID_FIELD=email",
       "EMAIL_FIELD=email",
       "GIVENNAME_FIELD=given_name",

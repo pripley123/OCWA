@@ -1,7 +1,7 @@
 db.createUser(
     {
-        user: "userX",
-        pwd: "passwordX",
+        user: "$MONGO_USERNAME",
+        pwd: "$MONGO_PASSWORD",
         roles: [ "readWrite" ]
     }
 );

@@ -1,8 +1,7 @@
 hostRootPath = "/var/ocwa"
 
 mongodb = {
-    username = "userX"
-    password = "passwordX"
+    username = "appuser"
 }
 
 postgres = {
