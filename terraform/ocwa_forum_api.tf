@@ -17,7 +17,7 @@ resource "docker_container" "ocwa_forum_api" {
       "LOG_LEVEL=debug",
       "API_PORT=3000",
       "WS_PORT=3001",
-      "DB_HOST=oc_mongodb",
+      "DB_HOST=ocwa_mongodb",
       "DB_NAME=oc_db",
       "DB_USERNAME=${var.mongodb["username"]}",
       "DB_PASSWORD=${var.mongodb["password"]}",
