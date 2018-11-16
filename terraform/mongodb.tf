@@ -10,9 +10,15 @@ resource "docker_image" "mongodb" {
 resource "docker_container" "ocwa_mongodb" {
   image = "${docker_image.mongodb.latest}"
   name = "ocwa_mongodb"
-  volumes = [ 
-      { host_path=${var.hostRootPath}/mongodb-data/logs, container_path=/usr/local/var/log/mongodb },
-      { host_path=${var.hostRootPath}/mongodb-data/data, container_path=/data/db } 
+  volumes = [
+      { 
+        host_path = "${var.hostRootPath}/mongodb-data/logs"
+        container_path = "/usr/local/var/log/mongodb"
+      }
+      { 
+        host_path = "${var.hostRootPath}/mongodb-data/data"
+        container_path = "/data/db"
+      }
   ]
   networks_advanced = { name = "${docker_network.private_network.name}" }
 }

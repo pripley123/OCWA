@@ -13,3 +13,7 @@ variable "authHost" {
 variable "authClientSecret" {
   type = "string"
 }
+
+variable "hostRootPath" {
+  type = "string"
+}
