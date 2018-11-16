@@ -29,4 +29,5 @@ resource "null_resource" "postgres_first_time_install" {
     },
     command = "docker run --net=ocwa_vnet -v $PWD:/work postgres:9.6.9 psql postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@ocwa_postgres -f /work/scripts/psql.sql"
   }
-}
+  depends_on = ["docker_container.ocwa_postgres"]
+ }

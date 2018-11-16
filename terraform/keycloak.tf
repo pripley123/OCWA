@@ -13,7 +13,7 @@ resource "docker_container" "ocwa_keycloak" {
   networks_advanced = { name = "${docker_network.private_network.name}" }
   env = [
    "DB_VENDOR=postgres",
-   "DB_ADDR=oc_postgres",
+   "DB_ADDR=ocwa_postgres",
    "DB_PORT=5432",
    "DB_USER=${var.postgres["username"]}",
    "DB_PASSWORD=${var.postgres["password"]}",
@@ -22,4 +22,6 @@ resource "docker_container" "ocwa_keycloak" {
    "KEYCLOAK_USER=${var.keycloak["username"]}",
    "KEYCLOAK_PASSWORD=${var.keycloak["password"]}"
   ]
+
+   depends_on = ["null_resource.postgres_first_time_install"]
 }
