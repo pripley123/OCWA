@@ -10,7 +10,7 @@ resource "docker_image" "ocwa_request_api" {
 
 resource "docker_container" "ocwa_request_api" {
   image = "${docker_image.ocwa_request_api.latest}"
-  name = "ocwa_request_api_tf"
+  name = "ocwa_request_api"
   networks_advanced = { name = "${docker_network.private_network.name}" }
   env = [
       "JWT_SECRET=${random_string.jwtSecret.result}",
