@@ -24,8 +24,9 @@ resource "docker_container" "ocwa_keycloak" {
   ]
   healthcheck = {
     test = "echo ok"
-    start_period = "5s"
-    retries = "30s"
+    start_period = "20s"
+    interval = "5s"
+    retries = 10
   }
 }
 
