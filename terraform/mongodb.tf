@@ -37,8 +37,8 @@ resource "local_file" "mongodb_script" {
 resource "null_resource" "mongodb_first_time_install" {
   provisioner "local-exec" {
     environment = {
-        SCRIPT_FILE = "${var.hostRootPath}/config/mongodb_script.js"
+        SCRIPT_PATH = "${var.hostRootPath}/config"
     }
-    command = "docker run --net=ocwa_vnet mongo:4.1.3 mongo mongodb://ocwa_mongodb $SCRIPT_FILE"
+    command = "docker run --net=ocwa_vnet -v $SCRIPT_PATH:/work mongo:4.1.3 mongo mongodb://ocwa_mongodb /work/mongodb_script.js"
   }
 }
