@@ -29,10 +29,11 @@ resource "docker_container" "ocwa_keycloak" {
 resource "null_resource" "keycloak_first_time_install" {
   provisioner "local-exec" {
     environment = {
+      "TESTUSER_PASSWORD" = "${random_string.testUserPassword.result}",
       "KEYCLOAK_USER" = "${var.keycloak["username"]}",
       "KEYCLOAK_PASSWORD" = "${var.keycloak["password"]}"
     }
-    command = "docker run --net=ocwa_vnet -e KEYCLOAK_USER -e KEYCLOAK_PASSWORD -v $PWD:/work --entrypoint /bin/bash jboss/keycloak:4.1.0.Final -c /work/scripts/keycloak-setup.sh"
+    command = "docker run --net=ocwa_vnet -e TESTUSER_PASSWORD -e KEYCLOAK_USER -e KEYCLOAK_PASSWORD -v $PWD:/work --entrypoint /bin/bash jboss/keycloak:4.1.0.Final -c /work/scripts/keycloak-setup.sh"
   }
 
 }
