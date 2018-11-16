@@ -27,4 +27,21 @@ resource "docker_container" "ocwa_nginx" {
     host_path = "${var.hostRootPath}/nginx"
     container_path = "/etc/nginx/conf.d/"
   }
+
+  depends_on = ["null_resource.proxy_config"]
+}
+
+data "template_file" "proxy_config" {
+  template = "${file("scripts/nginx-proxy.tpl")}"
+
+  vars {
+    test = "OK"
+  }
+}
+
+resource "null_resource" "proxy_config" {
+  provisioner "file" {
+    content      = "${data.template_file.proxy_config.rendered}"
+    destination = "${var.hostRootPath}/nginx/proxy.conf"
+  }
 }
