@@ -51,6 +51,9 @@ resource "docker_container" "tusd" {
 
 provider "aws" {
   region = "eu-west-1"
+  access_key = "${random_id.accessKey.hex}"
+  secret_key = "${random_string.secretKey.result}"
+
 }
 
 resource "aws_s3_bucket" "bucket" {
