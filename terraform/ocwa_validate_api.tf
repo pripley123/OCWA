@@ -23,7 +23,7 @@ resource "docker_container" "ocwa_validate_api" {
       "USER_ID_FIELD=email",
       "STORAGE_HOST=minio",
       "STORAGE_BUCKET=bucket",
-      "STORAGE_ACCESS_KEY=${random_id.accessKey.result}",
+      "STORAGE_ACCESS_KEY=${random_id.accessKey.hex}",
       "STORAGE_ACCESS_SECRET=${random_string.secretKey.result}",
       "POLICY_URL=ocwa_policy_api:3004"
   ]
