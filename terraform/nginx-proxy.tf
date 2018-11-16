@@ -34,6 +34,8 @@ resource "docker_container" "ocwa_nginx" {
 data "template_file" "proxy_config" {
   template = "${file("${path.module}/scripts/nginx-proxy.tpl")}"
   vars = {
+      authHost = "${var.authHost}"
+      ocwaHost = "${var.ocwaHost}"
       sslCertificate = "${var.sslCertificate}"
       sslCertificateKey = "${var.sslCertificateKey}"
   }
