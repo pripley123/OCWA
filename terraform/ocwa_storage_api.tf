@@ -49,13 +49,11 @@ resource "docker_container" "tusd" {
   ]
 }
 
-provider "aws" {
-  region = "eu-west-1"
-  access_key = "${random_id.accessKey.hex}"
-  secret_key = "${random_string.secretKey.result}"
-
-}
-
-resource "aws_s3_bucket" "bucket" {
-  bucket = "bucket"
+resource "null_resource" "minio_first_install" {
+  provisioner "local-exec" {
+    environment = {
+        MC_HOSTS_PRIMARY = "http://${random_id.accessKey.hex}:${random_string.secretKey.result}@ocwa_minio:9000"
+    }
+    command = "docker run -e MC_HOSTS_PRIMARY --net=ocwa_vnet minio/mc mb PRIMARY/bucket"
+  }
 }
