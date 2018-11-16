@@ -11,7 +11,7 @@ resource "docker_image" "minio" {
 resource "docker_container" "minio" {
   image = "${docker_image.minio.latest}"
   name = "ocwa_minio"
-  args = [ "server", "/data" ]
+  command = [ "server", "/data" ]
   networks_advanced = { name = "${docker_network.private_network.name}" }
   volumes = {
     host_path = "${var.hostRootPath}/minio/data"
@@ -41,7 +41,7 @@ resource "docker_image" "tusd" {
 resource "docker_container" "tusd" {
   image = "${docker_image.tusd.latest}"
   name = "ocwa_tusd"
-  args = [ "-s3-bucket", "bucket", "-s3-endpoint", "http://ocwa_minio:9000" ]
+  command = [ "-s3-bucket", "bucket", "-s3-endpoint", "http://ocwa_minio:9000" ]
   networks_advanced = { name = "${docker_network.private_network.name}" }
   volumes = {
     host_path = "${var.hostRootPath}/minio/data"
