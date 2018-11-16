@@ -1,3 +1,4 @@
+#!/bin/bash -e
 
 export KEYCLOAK_HOME=`pwd`/keycloak
 export PATH=$PATH:$KEYCLOAK_HOME/bin

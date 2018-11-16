@@ -29,5 +29,4 @@ resource "null_resource" "mongodb_first_time_install" {
     }
     command = "docker run --net=ocwa_vnet -e MONGO_USERNAME -e MONGO_PASSWORD -v $PWD:/work mongo:4.1.3 mongo mongodb://ocwa_mongodb /work/scripts/mongodb.sql"
   }
-
 }
