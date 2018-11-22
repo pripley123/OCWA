@@ -7,10 +7,15 @@ keycloak/bin/kcadm.sh config credentials --server http://ocwa_keycloak:8080/auth
 
 keycloak/bin/kcadm.sh create realms -s realm=ocwa -s enabled=true -o
 
-CID=$(kcadm.sh create clients -r ocwa -s clientId=outputchecker -s "redirectUris=[\"http://*\",\"https://*\"]" -i)
+CID=$(kcadm.sh create clients -r ocwa -s clientId=outputchecker -s enabled=true -s clientAuthenticatorType=client-secret -s secret=$KEYCLOAK_CLIENT_SECRET -s "redirectUris=[\"http://*\",\"https://*\"]" -i)
 
 kcadm.sh get clients/$CID -r ocwa
 
 kcadm.sh create users -r ocwa -s username=testuser -s enabled=true -s email=testuser@nowhere.com -s firstName=TestF -s lastName=TestL
 
 kcadm.sh set-password -r ocwa --username testuser --new-password $TESTUSER_PASSWORD
+
+kcadm.sh create groups -r ocwa -s name=exporter
+
+
+# kcadm.sh create users -r ocwa -s username=testuser3 -s enabled=true -s email=testuser3@nowhere.com -s firstName=TestF -s lastName=TestL

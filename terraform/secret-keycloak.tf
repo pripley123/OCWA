@@ -10,3 +10,7 @@ resource "random_string" "testUserPassword" {
   special = false
   override_special = "/@\" "
 }
+
+resource "random_uuid" "outputcheckerClientSecret" { 
+
+}
