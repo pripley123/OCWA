@@ -27,7 +27,7 @@ data "template_file" "mongodb_script" {
 
 resource "local_file" "mongodb_script" {
     content = "${data.template_file.mongodb_script.rendered}"
-    filename = "${var.hostRootPath}/data/mongodb_script.js"
+    filename = "${var.hostRootPath}/mongodb_script.js"
 }
 
 resource "null_resource" "mongodb_first_time_install" {
