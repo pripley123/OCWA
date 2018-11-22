@@ -20,14 +20,8 @@ resource "docker_container" "ocwa_keycloak" {
    "DB_DATABASE=keycloak",
    "PROXY_ADDRESS_FORWARDING=true",
    "KEYCLOAK_USER=${var.keycloak["username"]}",
-   "KEYCLOAK_PASSWORD=${var.keycloak["password"]}"
+   "KEYCLOAK_PASSWORD=${random_string.keycloakAdminPassword.result}"
   ]
-  healthcheck = {
-    test = ["echo", "ok"]
-    start_period = "20s"
-    interval = "5s"
-    retries = 10
-  }
 }
 
 resource "null_resource" "keycloak_first_time_install" {
@@ -35,7 +29,7 @@ resource "null_resource" "keycloak_first_time_install" {
     environment = {
       "TESTUSER_PASSWORD" = "${random_string.testUserPassword.result}",
       "KEYCLOAK_USER" = "${var.keycloak["username"]}",
-      "KEYCLOAK_PASSWORD" = "${var.keycloak["password"]}",
+      "KEYCLOAK_PASSWORD" = "${random_string.keycloakAdminPassword.result}",
       "KEYCLOAK_CLIENT_SECRET" = "${random_uuid.outputcheckerClientSecret.result}"
     }
     command = "docker run --net=ocwa_vnet -e TESTUSER_PASSWORD -e KEYCLOAK_USER -e KEYCLOAK_PASSWORD -e KEYCLOAK_CLIENT_SECRET -v $PWD:/work --entrypoint /bin/bash jboss/keycloak:4.1.0.Final -c /work/scripts/keycloak-setup.sh"

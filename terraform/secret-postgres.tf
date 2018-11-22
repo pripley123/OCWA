@@ -3,3 +3,9 @@ resource "random_string" "postgresSuperPassword" {
   special = false
   override_special = "/@\" "
 }
+
+resource "random_string" "postgresAppPassword" {
+  length = 16
+  special = false
+  override_special = "/@\" "
+}

@@ -4,7 +4,6 @@ resource "random_string" "keycloakAdminPassword" {
   override_special = "/@\" "
 }
 
-
 resource "random_string" "testUserPassword" {
   length = 16
   special = false
@@ -12,5 +11,4 @@ resource "random_string" "testUserPassword" {
 }
 
 resource "random_uuid" "outputcheckerClientSecret" { 
-
 }
