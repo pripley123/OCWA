@@ -6,7 +6,6 @@ mongodb = {
 
 postgres = {
     username = "kcuser"
-    password = "kcuserpassword"
 }
 
 keycloak = {

@@ -18,10 +18,6 @@ variable "authHost" {
   type = "string"
 }
 
-variable "authClientSecret" {
-  type = "string"
-}
-
 variable "hostRootPath" {
   type = "string"
 }

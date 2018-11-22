@@ -16,7 +16,7 @@ resource "docker_container" "ocwa_keycloak" {
    "DB_ADDR=ocwa_postgres",
    "DB_PORT=5432",
    "DB_USER=${var.postgres["username"]}",
-   "DB_PASSWORD=${var.postgres["password"]}",
+   "DB_PASSWORD=${random_string.postgresAppPassword.result}",
    "DB_DATABASE=keycloak",
    "PROXY_ADDRESS_FORWARDING=true",
    "KEYCLOAK_USER=${var.keycloak["username"]}",
